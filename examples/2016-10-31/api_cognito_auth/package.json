@@ -9,7 +9,8 @@
     "body-parser": "^1.17.1",
     "cors": "^2.8.3",
     "express": "^4.15.2",
-    "pug": "^2.0.0-rc.1"
+    "pug": "^2.0.0-rc.1",
+    "snyk": "^1.316.1"
   },
   "scripts": {
     "package-deploy": "npm run set-config && npm run package && npm run deploy",
@@ -25,6 +26,9 @@
     "create-user-pool-domain": "aws cognito-idp create-user-pool-domain --domain $(npm config get API_ID) --user-pool-id $(npm config get COGNITO_USER_POOL_ID)",
     "open-signup-page": "open \"https://$(npm config get API_ID).auth.$(aws cloudformation describe-stacks --stack-name $(npm config get STACK_NAME) --query 'Stacks[].Outputs[?OutputKey==`Region`].OutputValue' --output text).amazoncognito.com/signup?response_type=code&client_id=$(npm config get COGNITO_USER_POOL_CLIENT_ID)&redirect_uri=$(npm config get API_URL)\"",
     "open-login-page": "open \"https://$(npm config get API_ID).auth.$(aws cloudformation describe-stacks --stack-name $(npm config get STACK_NAME) --query 'Stacks[].Outputs[?OutputKey==`Region`].OutputValue' --output text).amazoncognito.com/login?response_type=code&client_id=$(npm config get COGNITO_USER_POOL_CLIENT_ID)&redirect_uri=$(npm config get API_URL)\"",
-    "open-api-ui": "open \"$(npm config get API_URL)\""
-  }
+    "open-api-ui": "open \"$(npm config get API_URL)\"",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
+  },
+  "snyk": true
 }
